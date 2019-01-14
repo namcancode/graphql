@@ -1,0 +1,91 @@
+.el-select,
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+  width: 23%;
+}
+
+.el-date-editor .el-range-separator {
+  width: 8%;
+}
+.el-picker-panel *[slot='sidebar'],
+.el-picker-panel__sidebar {
+  top: 20px;
+  width: 150px;
+}
+.el-picker-panel *[slot='sidebar'] + .el-picker-panel__body,
+.el-picker-panel__sidebar + .el-picker-panel__body {
+  margin-left: 150px;
+}
+
+.el-pager {
+  .active {
+    color: red !important;
+  }
+}
+
+.el-radio__inner {
+  width: 20px;
+  height: 20px;
+}
+@media (min-width: 992px) {
+  .card form [class*='col-'] {
+    padding: 0 15px !important;
+  }
+}
+.el-checkbox__inner::after {
+  height: 10px;
+  left: 7px;
+}
+.el-checkbox__inner {
+  width: 20px;
+  height: 20px;
+}
+.el-select {
+  width: 100%;
+}
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+  display: block;
+  width: 100%;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.ma {
+  margin: auto 0;
+}
+.mb0 {
+  margin-bottom: 0;
+}
+.flex {
+  display: flex;
+}
+
+.el-date-editor .el-range-input {
+  height: 99%;
+}
+
+.el-table .cell {
+  word-break: break-word;
+}
+
+.ttc {
+  text-transform: capitalize;
+  input {
+    text-transform: capitalize;
+  }
+}
+
+.ttn {
+  text-transform: none;
+}
+
+.el-select-dropdown {
+  text-transform: capitalize;
+}
+
+.full-width {
+  width: 100%;
+}
