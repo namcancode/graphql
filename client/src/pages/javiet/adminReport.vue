@@ -1,15 +1,15 @@
 <template>
   <div>
-
     <Card title="Bộ Lọc">
       <div class="row">
-
         <Form-Element title="Ngày ứng viên thêm vào" size="col-xl-4 col-md-6">
-          <el-date-picker format="dd/MM/yyyy" v-model="filter.dateRange" type="daterange" align="right" unlink-panels range-separator="T" start-placeholder="Ngày bắt đầu" end-placeholder="Ngày kết thúc" :picker-options="dateOptions" />
+          <el-date-picker format="dd/MM/yyyy" v-model="filter.dateRange" type="daterange" align="right" unlink-panels range-separator="T" start-placeholder="Ngày bắt đầu" end-placeholder="Ngày kết thúc" :picker-options="dateOptions"/>
         </Form-Element>
 
         <div class="col-xl-2 col-lg-6" style="margin-top:44px">
-          <el-button type="success" @click="getDataApplicant"> <i class="el-icon-search"></i> Tìm kiếm</el-button>
+          <el-button type="success" @click="getDataApplicant">
+            <i class="el-icon-search"></i> Tìm kiếm
+          </el-button>
         </div>
       </div>
     </Card>
@@ -18,48 +18,49 @@
       <div class="col-12">
         <div class="list-annotation row col-8 mb-3">
           <ul class="list-group col-xl-3 col-md-4 col-sm-6">
-            <li class="list-group-item list_item_1 "><em>Chưa liên lạc</em></li>
+            <li class="list-group-item list_item_1">
+              <em>Chưa liên lạc</em>
+            </li>
           </ul>
           <ul class="list-group col-xl-3 col-md-4 col-sm-6">
-            <li class="list-group-item list_item_3 "><em>Đang chăm sóc</em></li>
+            <li class="list-group-item list_item_3">
+              <em>Đang chăm sóc</em>
+            </li>
           </ul>
           <ul class="list-group col-xl-3 col-md-4 col-sm-6">
-            <li class="list-group-item list_item_2 "><em>Dừng chăm sóc</em></li>
+            <li class="list-group-item list_item_2">
+              <em>Dừng chăm sóc</em>
+            </li>
           </ul>
         </div>
 
-        <div class="row" v-if="admin">
-          <div class="col-4">
-            <Chart-Card title="Tổng Quan" chartType="Pie" :chartOptions="overviewOptions.Pie" :chartData="overviewData.Pie" />
-          </div>
-          <div class="col-8">
-            <Chart-Card title="Chi Tiết" chartType="Line" :chartOptions="overviewOptions.Line" :chartData="overviewData.Line" />
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12" v-if="admin">
-        <div class="row" v-for="(rec, index) in listRec" :key="index">
-          <div class="col-4">
-            <Chart-Card :title="'Tổng Quan: '+rec" chartType="Pie" :chartOptions="overviewOptions.Pie" :chartData="getChartPieDataByRec(rec)" />
-          </div>
-          <div class="col-8">
-            <Chart-Card :title="'Chi tiết: '+rec" chartType="Line" :chartOptions="overviewOptions.Line" :chartData="getChartLineDataByRec(rec)" />
-          </div>
-        </div>
-      </div>
-      <div class="col-12" v-else>
         <div class="row">
           <div class="col-4">
-            <Chart-Card :title="'Tổng Quan: '+listRec" chartType="Pie" :chartOptions="overviewOptions.Pie" :chartData="getChartPieDataByRec(listRec)" />
+            <Chart-Card title="Tổng Quan" chartType="Pie" :chartOptions="overviewOptions.Pie" :chartData="overviewData.Pie"/>
           </div>
           <div class="col-8">
-            <Chart-Card :title="'Chi tiết: '+listRec" chartType="Line" :chartOptions="overviewOptions.Line" :chartData="getChartLineDataByRec(listRec)" />
+            <Chart-Card title="Tổng quan lý do ứng viên dừng chăm sóc" chartType="Bar" :chartOptions="overviewOptions.Line" :chartData="overviewData.Bar"/>
+          </div>
+          <div class="col-12">
+            <Chart-Card title="Chi Tiết" chartType="Line" :chartOptions="overviewOptions.Line" :chartData="overviewData.Line"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="row" v-for="(rec, index) in listRec" :key="index">
+          <div class="col-4">
+            <Chart-Card :title="'Tổng Quan: '+rec" chartType="Pie" :chartOptions="overviewOptions.Pie" :chartData="getChartPieDataByRec(rec)"/>
+          </div>
+          <div class="col-8">
+            <Chart-Card :title="'Tổng quan lý do ứng viên dừng chăm sóc: '+rec" :chartOptions="overviewOptions.Line" chartType="Bar" :chartData="getChartBarDataByRec(rec)"/>
+          </div>
+          <div class="col-12">
+            <Chart-Card :title="'Chi tiết: '+rec" chartType="Line" :chartOptions="overviewOptions.Line" :chartData="getChartLineDataByRec(rec)"/>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -71,9 +72,10 @@ import { Button, Notification, Input, Select, DatePicker, Option, Loading } from
 import request from '@/plugins/request'
 import { subDays, subMonths } from 'date-fns'
 import { IApplicant, IApplicantHistory } from '@/interface/Applicant'
-import { getOverviewChartLineData, getChartLineDataByRec, getOverviewChartPieData, getChartPieDataByRec } from '@/mapper/javietReport'
+import { getOverviewChartLineData, getChartLineDataByRec, getOverviewChartPieData, getChartPieDataByRec, getChartBarDataByRec, getOverviewChartBarData } from '@/mapper/javietReport'
 import { JavietDoc } from '@/interface/Javiet'
 import { ctPointLabels, ratioLabels } from '@/plugins/chartist'
+import Chartist from 'chartist'
 
 @Component({
   components: {
@@ -90,12 +92,12 @@ import { ctPointLabels, ratioLabels } from '@/plugins/chartist'
 export default class JavietReport extends Vue {
   filter = {}
   listRec = []
-  admin = true
   loading = false
   rawData: JavietDoc[] = []
   overviewData = {
     Line: {},
-    Pie: {}
+    Pie: {},
+    Bar: {}
   }
   overviewOptions = {
     Line: {
@@ -103,6 +105,9 @@ export default class JavietReport extends Vue {
       showArea: true,
       chartPadding: {
         top: 25
+      },
+      axisY: {
+        onlyInteger: true
       },
       plugins: [ctPointLabels(), ratioLabels()]
     },
@@ -145,13 +150,12 @@ export default class JavietReport extends Vue {
   }
 
   created() {
-    this.admin = this.$route.meta.role.includes('javiet_admin') ? true : false
     this.loading = true
-    this.getDataApplicant().then(() => {})
+    this.getDataApplicant().finally(() => (this.loading = false))
   }
 
   async getListRec() {
-    return request.get('javiet/admin/list-recruiter').then(rs => {
+    await request.get('javiet/admin/list-recruiter').then(rs => {
       this.listRec = rs.data
     })
   }
@@ -159,16 +163,22 @@ export default class JavietReport extends Vue {
   getChartLineDataByRec(rec: string) {
     return getChartLineDataByRec(this.rawData, rec)
   }
+
   getChartPieDataByRec(rec: string) {
     return getChartPieDataByRec(this.rawData, rec)
   }
 
+  getChartBarDataByRec(rec: string) {
+    return getChartBarDataByRec(this.rawData, rec)
+  }
+
   async getDataApplicant() {
-    return request.post('javiet/admin/list-applicant', this.filter).then(async rs => {
-      this.rawData = rs.data
+    await request.post('javiet/admin/list-applicant', this.filter).then(async rs => {
       await this.getListRec()
+      this.rawData = rs.data
       this.overviewData.Line = getOverviewChartLineData(this.rawData)
       this.overviewData.Pie = getOverviewChartPieData(this.rawData)
+      this.overviewData.Bar = getOverviewChartBarData(this.rawData)
     })
   }
 }

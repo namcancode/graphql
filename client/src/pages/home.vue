@@ -26,6 +26,10 @@ export default class Home extends MainVue {
       routeName = 'tinhloi'
     }
 
+    if (this.user.role === ROLE.TINHLOI_TELESALE) {
+      routeName = 'tinhloiTelesale'
+    }
+
     if (this.user.role === ROLE.ADMIN) {
       routeName = 'listUser'
     }

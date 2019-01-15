@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose'
-import { ITinhLoiDocument, SCREENING_STATUS, INTERVIEW_STATUS, OFFER_STATUS } from '@/interface/ApplicantHistory/TinhLoi'
+import { ITinhLoiDocument, SCREENING_STATUS, INTERVIEW_STATUS, OFFER_STATUS, ITinhLoi } from '../../interface/ApplicantHistory/TinhLoi'
 import * as mongoosePaginate from 'mongoose-paginate'
-import { COMPANY } from '@/interface/User'
+import { COMPANY, USER_ROLE } from '@/interface/User'
 
 
 export const TinhLoiSchema = new Schema(

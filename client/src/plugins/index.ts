@@ -1,4 +1,4 @@
-import GlobalDirectives from '@/plugins/globalDirectives'
+import GlobalDirectives from '@/plugins/globalComponent'
 import 'es6-promise/auto'
 //css assets
 import 'bootstrap/dist/css/bootstrap.css'

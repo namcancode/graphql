@@ -10,8 +10,8 @@ let messages = {
     'Đăng xuất': 'Logout',
     'Thông báo': 'Notifications',
     'Bộ Lọc': 'Filter',
-    Lọc: 'Filter',
-    Nguồn: 'Source',
+    'Lọc': 'Filter',
+    'Nguồn': 'Source',
     'Ngày bắt đầu': 'Start date',
     'Ngày kết thúc': 'End date',
     'Bộ lọc dùng chung cho các biểu đồ dưới đây': 'Global filter for all metric',
@@ -40,10 +40,10 @@ let messages = {
     'Thêm ứng viên': '',
     'Họ và Tên': '',
     'Chứng minh nhân dân': '',
-    Nam: '',
-    Nữ: '',
+    'Nam': '',
+    'Nữ': '',
     'Số điện thoại': '',
-    Tỉnh: '',
+    'Tỉnh': '',
     'Chọn tỉnh': '',
     'Ngày sinh': '',
     'Đánh dấu source_id': '',
@@ -53,7 +53,11 @@ let messages = {
     'Gắn tag ứng viên': '',
     'Tag đã tồn tại': '',
     'Không được thêm tag trống': '',
-    'Không thể kết nối đến máy chủ': 'Could not connect to server'
+    'Không thể kết nối đến máy chủ': 'Could not connect to server',
+    'Hôm nay':'Today',
+    'Tuần này': '',
+    'Ngày mai': '',
+    'Ngày kia':''
   },
   vi: {}
 }
@@ -64,7 +68,8 @@ Vue.use(VueI18n)
 
 export default new VueI18n({
   locale: 'vi',
-  messages
+  messages,
+  silentTranslationWarn: true
 })
 
 export const listLang = ['en', 'vi']

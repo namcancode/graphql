@@ -9,6 +9,22 @@ const tinhloiRoutes: RouteConfig[] = [
     meta: {
       role: [ROLE.TINHLOI_RECRUITER]
     }
+  },
+  {
+    path: 'tinhloi/telesale',
+    name: 'tinhloiTelesale',
+    component: () => import('@/pages/tinhloi/telesale.vue'),
+    meta: {
+      role: [ROLE.TINHLOI_TELESALE]
+    }
+  },
+  {
+    path: '/tinhloi/:historyId',
+    name: 'tinhloiDetail',
+    component: () => import('@/pages/tinhloi/detail.vue'),
+    meta: {
+      role: [ROLE.TINHLOI_TELESALE]
+    }
   }
 ]
 

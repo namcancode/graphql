@@ -19,3 +19,10 @@ export const JAVIET_STEP = [
   '5 .Đã nộp cọc',
   '6. Dừng chăm sóc'
 ]
+
+export const JAVIET_STOP_REASON = [
+  'Đỗ công ty khác',
+  'Không đủ điều kiện về sức khoẻ (bệnh tật, săm trổ, chiều cao cân nặng,...)',
+  'Không có nhu cầu đi TTS',
+  'Khác'
+]

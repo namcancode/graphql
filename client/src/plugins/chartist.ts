@@ -30,6 +30,23 @@ export function ctPointLabels(options: any = {}) {
         }
       })
     }
+    if (chart instanceof Chartist.Bar) {
+      chart.on('draw', function(data:any) {
+        if (data.type === 'bar') {
+          data.group
+            .elem(
+              'text',
+              {
+                x: (data.x === undefined ? data.x1 : data.x) + options.labelOffset.x,
+                y: (data.y === undefined ? data.y2 : data.y) + options.labelOffset.y,
+                style: 'text-anchor: ' + options.textAnchor
+              },
+              options.labelClass
+            )
+            .text(data.value.y)
+        }
+      })
+    }
   }
 }
 

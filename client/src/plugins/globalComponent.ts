@@ -1,6 +1,7 @@
 import { directive as vClickOutside } from 'vue-clickaway'
-import { VueConstructor, PluginObject } from 'vue'
-import { Loading } from 'element-ui';
+import { VueConstructor } from 'vue'
+import ElementUI from 'element-ui'
+import { FormElement, Card } from '@/components'
 
 /**
  * You can register global directives here and use them as a plugin in your main Vue instance
@@ -9,7 +10,10 @@ import { Loading } from 'element-ui';
 const GlobalDirectives = {
   install(Vue: VueConstructor) {
     Vue.directive('click-outside', vClickOutside)
-    Vue.use(<PluginObject<any>>Loading.directive)
+    Vue.component('Form-Element', FormElement)
+    Vue.component('FormElement', FormElement)
+    Vue.component('Card', Card)
+    Vue.use(ElementUI)
   }
 }
 

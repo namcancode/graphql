@@ -96,7 +96,7 @@ export default class AdminUser extends Vue {
     this.$apollo.queries.users.refetch()
   }
 
-  get loading():boolean {
+  get loading(): boolean {
     return this.$apollo.queries.users.loading
   }
 

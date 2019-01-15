@@ -8,5 +8,6 @@ import MarketerMenu from './Layout/Menu/MarketerMenu.vue'
 import TinhloiMenu from './Layout/Menu/TinhloiMenu.vue'
 import JavietMenu from './Layout/Menu/JavietMenu.vue'
 import JavietAdminMenu from './Layout/Menu/JavietAdminMenu.vue'
+import DialogApplicantForm from './Layout/DialogApplicantForm.vue'
 
-export { Card, ChartCard, StatsCard, DropDown, FormElement, AdminMenu, MarketerMenu, TinhloiMenu, JavietMenu, JavietAdminMenu }
+export { Card, ChartCard, StatsCard, DropDown, FormElement, AdminMenu, MarketerMenu, TinhloiMenu, JavietMenu, JavietAdminMenu, DialogApplicantForm }

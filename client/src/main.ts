@@ -7,10 +7,12 @@ import plugins from '@/plugins'
 import i18n from '@/plugins/i18n'
 import lang from 'element-ui/lib/locale/lang/vi'
 import locale from 'element-ui/lib/locale'
+import ElementUI from 'element-ui'
 import { apolloProvider } from './plugins/apollo'
 
 locale.use(lang)
 Vue.use(plugins)
+Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 new Vue({

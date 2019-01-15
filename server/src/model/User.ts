@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Model, Query } from 'mongoose'
 import { IUserDocument } from '../interface/User'
 import { createHmac } from 'crypto'
 import { PASSWORD_HASH } from '../config'
@@ -7,6 +7,7 @@ export const schema = new Schema({
   username: { type: String, required: true },
   password: String,
   role: { type: String, required: true },
+  name: { type: String, default: '' },
   lang: { type: String, default: 'vi' }
 })
 
@@ -36,9 +37,7 @@ schema.query.company = function(company: string) {
 }
 
 export function getCryptPassword(password) {
-  return createHmac('sha512', PASSWORD_HASH)
-    .update(password)
-    .digest('hex')
+  return createHmac('sha512', PASSWORD_HASH).update(password).digest('hex')
 }
 
 export default model<IUserDocument>('User', schema, 'user')

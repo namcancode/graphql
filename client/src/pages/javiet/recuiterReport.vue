@@ -1,15 +1,15 @@
 <template>
   <div>
-
     <Card title="Bộ Lọc">
       <div class="row">
-
         <Form-Element title="Ngày ứng viên thêm vào" size="col-xl-4 col-md-6">
-          <el-date-picker format="dd/MM/yyyy" v-model="filter.dateRange" type="daterange" align="right" unlink-panels range-separator="T" start-placeholder="Ngày bắt đầu" end-placeholder="Ngày kết thúc" :picker-options="dateOptions" />
+          <el-date-picker format="dd/MM/yyyy" v-model="filter.dateRange" type="daterange" align="right" unlink-panels range-separator="T" start-placeholder="Ngày bắt đầu" end-placeholder="Ngày kết thúc" :picker-options="dateOptions"/>
         </Form-Element>
 
         <div class="col-xl-2 col-lg-6" style="margin-top:44px">
-          <el-button type="success" @click="getDataApplicant"> <i class="el-icon-search"></i> Tìm kiếm</el-button>
+          <el-button type="success" @click="getDataApplicant">
+            <i class="el-icon-search"></i> Tìm kiếm
+          </el-button>
         </div>
       </div>
     </Card>
@@ -18,13 +18,19 @@
       <div class="col-12">
         <div class="list-annotation row col-8 mb-3">
           <ul class="list-group col-xl-3 col-md-4 col-sm-6">
-            <li class="list-group-item list_item_1 "><em>Chưa liên lạc</em></li>
+            <li class="list-group-item list_item_1">
+              <em>Chưa liên lạc</em>
+            </li>
           </ul>
           <ul class="list-group col-xl-3 col-md-4 col-sm-6">
-            <li class="list-group-item list_item_3 "><em>Đang chăm sóc</em></li>
+            <li class="list-group-item list_item_3">
+              <em>Đang chăm sóc</em>
+            </li>
           </ul>
           <ul class="list-group col-xl-3 col-md-4 col-sm-6">
-            <li class="list-group-item list_item_2 "><em>Dừng chăm sóc</em></li>
+            <li class="list-group-item list_item_2">
+              <em>Dừng chăm sóc</em>
+            </li>
           </ul>
         </div>
       </div>
@@ -32,15 +38,18 @@
       <div class="col-12">
         <div class="row">
           <div class="col-4">
-            <Chart-Card :title="'Tổng Quan: '+nameRec" chartType="Pie" :chartOptions="overviewOptions.Pie" :chartData="getChartPieDataByRec()" />
+            <Chart-Card :title="'Tổng Quan: '+nameRec" chartType="Pie" :chartOptions="overviewOptions.Pie" :chartData="getChartPieDataByRec()"/>
           </div>
           <div class="col-8">
-            <Chart-Card :title="'Chi tiết: '+nameRec" chartType="Line" :chartOptions="overviewOptions.Line" :chartData="getChartLineDataByRec()" />
+            <Chart-Card :title="'Tổng quan lý do ứng viên dừng chăm sóc: '+nameRec" chartType="Bar" :chartOptions="overviewOptions.Line" :chartData="getChartBarDataByRec()"/>
           </div>
         </div>
       </div>
-    </div>
 
+      <div class="col-12">
+        <Chart-Card :title="'Chi Tiết: '+nameRec" chartType="Line" :chartOptions="overviewOptions.Line" :chartData="getChartLineDataByRec()"/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -52,7 +61,7 @@ import { Button, Notification, Input, Select, DatePicker, Option, Loading } from
 import request from '@/plugins/request'
 import { subDays, subMonths } from 'date-fns'
 import { IApplicant, IApplicantHistory } from '@/interface/Applicant'
-import { getOverviewChartLineData, getChartLineDataByRec, getOverviewChartPieData, getChartPieDataByRec } from '@/mapper/javietReport'
+import { getChartLineDataByRec, getChartPieDataByRec, getChartBarDataByRec } from '@/mapper/javietReport'
 import { JavietDoc } from '@/interface/Javiet'
 import { ctPointLabels, ratioLabels } from '@/plugins/chartist'
 import MainVue from '@/components/Main.vue'
@@ -80,6 +89,9 @@ export default class RecuiterReport extends MainVue {
       showArea: true,
       chartPadding: {
         top: 25
+      },
+      axisY: {
+        onlyInteger: true
       },
       plugins: [ctPointLabels(), ratioLabels()]
     },
@@ -124,7 +136,7 @@ export default class RecuiterReport extends MainVue {
   created() {
     this.loading = true
     this.nameRec = this.user.username as string
-    this.getDataApplicant().then(() => {})
+    this.getDataApplicant().then(() => (this.loading = false))
   }
 
   getChartLineDataByRec() {
@@ -133,6 +145,10 @@ export default class RecuiterReport extends MainVue {
 
   getChartPieDataByRec() {
     return getChartPieDataByRec(this.rawData, this.nameRec)
+  }
+
+  getChartBarDataByRec() {
+    return getChartBarDataByRec(this.rawData, this.nameRec)
   }
 
   async getDataApplicant() {

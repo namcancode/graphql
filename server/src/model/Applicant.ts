@@ -4,7 +4,8 @@ import * as mongoosePaginate from 'mongoose-paginate'
 import ApplicantTag from './ApplicantTag'
 import Javiet from './ApplicantHistory/Javiet'
 import TinhLoi from './ApplicantHistory/TinhLoi'
-import { UserInputError } from 'apollo-server'
+
+import ApplicationError from '@/library/ApplicationError'
 
 export const ApplicantSchema = new Schema({
   name: {
@@ -88,18 +89,18 @@ export const ApplicantSchema = new Schema({
   createdAt: { type: Date, default: Date.now }
 })
 
+ApplicantSchema.post('save', (err, doc, next) => {
+  if (err.name === 'MongoError' && err.code === 11000) {
+    throw new ApplicationError('Ứng viên đã tồn tại trong hệ thống')
+  } else {
+    next(err)
+  }
+})
+
 ApplicantSchema.post('remove', (doc: IApplicantDocument) => {
   ApplicantTag.deleteMany({ applicantId: doc._id }).exec()
   Javiet.deleteMany({ applicantId: doc._id }).exec()
   TinhLoi.deleteMany({ applicantId: doc._id }).exec()
-})
-
-ApplicantSchema.post('save', (err, doc, next) => {
-  if (err.name === 'MongoError' && err.code === 11000) {
-    throw new UserInputError('Ứng viên đã tồn tại trong hệ thống')
-  } else {
-    next(err)
-  }
 })
 
 ApplicantSchema.plugin(mongoosePaginate)

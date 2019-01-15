@@ -51,6 +51,7 @@ export interface IApplicantHistory {
   interviewNote: string
   offerNote: string
   note: string
+  status: number
 }
 
 export const LIST_PROVINCE = [

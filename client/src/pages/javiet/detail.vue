@@ -115,7 +115,7 @@ export default class JavietDetail extends Vue {
   create() {
     this.loading.create = true
     request
-      .post(this.apiUrl, { ...this.applicant, ...this.newEngage })
+      .post(this.apiUrl, { applicant: this.applicant, engage: this.newEngage })
       .then(rs => {
         Notification.success('Thêm lịch sử tư vấn thành công')
         this.listEngage.push(rs.data)
@@ -128,7 +128,7 @@ export default class JavietDetail extends Vue {
     const engage = this.listEngage[index]
     const loading = Loading.service({ target: '#engage-' + index })
     request
-      .put(`${this.apiUrl}/${engage._id}`, { ...this.applicant, ...engage })
+      .put(`${this.apiUrl}/${engage._id}`, { applicant: this.applicant, engage: engage })
       .then(rs => {
         Notification.success('Sửa lịch sử tư vấn thành công')
       })

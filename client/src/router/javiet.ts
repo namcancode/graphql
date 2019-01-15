@@ -19,17 +19,17 @@ const javietRoutes: RouteConfig[] = [
     }
   },
   {
-    path: 'javiet/recuiter-report',
-    name: 'javietRecuiterReport',
-    component: () => import('@/pages/javiet/recuiterReport.vue'),
+    path: 'javiet',
+    name: 'javiet',
+    component: () => import('@/pages/javiet/index.vue'),
     meta: {
       role: [ROLE.JAVIET_RECRUITER]
     }
   },
   {
-    path: 'javiet',
-    name: 'javiet',
-    component: () => import('@/pages/javiet/index.vue'),
+    path: 'javiet/recuiter-report',
+    name: 'javietRecuiterReport',
+    component: () => import('@/pages/javiet/recuiterReport.vue'),
     meta: {
       role: [ROLE.JAVIET_RECRUITER]
     }

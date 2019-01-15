@@ -3,13 +3,16 @@ export const ROLE = {
   MARKETER: 'marketer',
   JAVIET_ADMIN: 'javiet_admin',
   JAVIET_RECRUITER: 'javiet_recruiter',
-  TINHLOI_RECRUITER: 'tinhloi_recruiter'
+  TINHLOI_RECRUITER: 'tinhloi_recruiter',
+  TINHLOI_TELESALE: 'tinhloi_telesale'
 }
 
 export interface IUser {
-  id: string
+  id?: string
   username: string
   company: string
   role: string
-  lang: string
+  password?: string
+  name?: string
+  lang?: string
 }
